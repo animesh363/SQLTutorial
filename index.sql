@@ -294,5 +294,141 @@ ORDER BY employee_id;
 
 
 --	DEFAULT --
+-- DEFAULT constraint automatically assigns a specified value when no value is provided for a column.
 
-SELECT * FROM products
+SELECT * FROM students
+
+-- 1)adding while creating a new table 
+CREATE TABLE yova (
+    student_id INT,
+    student_name VARCHAR(50),
+    course VARCHAR(50),
+    status VARCHAR(20) DEFAULT 'Active'
+);
+INSERT INTO  yova
+VALUES	(1, "Animesh", "BTech","Inactive");
+		
+        
+INSERT INTO  yova
+VALUES	(2, "Pranav", "ECE",DEFAULT);
+
+SELECT * FROM yova;
+
+-- 2) adding in existing table
+ALTER TABLE products
+ALTER price SET DEFAULT 0;
+
+INSERT INTO products(product_id, product_name)  -- by default price will set to 0
+VALUES	(105, "Straw"),
+		(106, "napkin"),
+        (107, "spoon"),
+        (108, "fork");
+
+SELECT * FROM products; 
+
+
+
+CREATE TABLE transactions(
+	transaction_id INT,
+    amount DECIMAL,  -- missed (5,2) digit and presition so it taken as int
+    transaction_date DATETIME DEFAULT NOW()
+);
+ALTER TABLE transactions
+MODIFY amount DECIMAL(5,2);
+
+DELETE FROM transactions 
+WHERE transaction_id=1;
+
+INSERT INTO transactions(transaction_id, amount)
+VALUES	(1, 2.99);
+
+INSERT INTO transactions(transaction_id, amount)
+VALUES	(2, 3.99),
+		(3, 4.99),
+        (4,5.99999);
+
+SELECT * FROM transactions;
+
+DROP TABLE transactions;
+
+--	PRIMARY KEY
+-- 1) adding while creqting the table 
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY,
+    amount DECIMAL(5,2)
+);
+DROP TABLE transactions;
+-- 1) adding in existing table
+CREATE TABLE transactions(
+	transaction_id INT,
+    amount DECIMAL(5,2)
+);
+
+ALTER TABLE transactions
+ADD CONSTRAINT PRIMARY KEY(transaction_id);
+
+INSERT INTO transactions
+VALUES	(1001, 3.99);
+
+INSERT INTO transactions
+VALUES	(1001, 4.99); -- Error Code: 1062. Duplicate entry '1001 ' for key transactions.PRlMARY
+
+INSERT INTO transactions
+VALUES	(NULL, 5.99); -- Error Code: 1048. Column •transaction id cannot be null
+
+INSERT INTO transactions
+VALUES	(1002, 4.99),
+		(1003,5.99),
+        (1004,6.99);
+
+SELECT amount 
+FROM transactions
+WHERE transaction_id = 1003;
+
+
+SELECT * FROM transactions;
+
+DROP TABLE transactions;
+
+--	AUTO_INCREMENT  --
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY  AUTO_INCREMENT,
+    amount DECIMAL(5,2)
+);
+
+INSERT INTO transactions(amount)
+VALUES (4.99);
+
+INSERT INTO transactions(amount)
+VALUES	(5.99),
+		(6.99),
+        (5.89);
+	
+SELECT * FROM transactions;
+
+DELETE FROM transactions;
+
+-- starting from a specific number
+-- 1)after creation
+ALTER TABLE transactions
+AUTO_INCREMENT = 1000;
+
+INSERT INTO transactions(amount)
+VALUES	(5.99),
+		(6.99),
+        (5.89);
+DROP TABLE transactions;
+-- 2) while  creating the table
+
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    amount DECIMAL(5,2)
+)AUTO_INCREMENT = 100;
+
+INSERT INTO transactions(amount)
+VALUES	(5.99),
+		(6.99),
+        (5.89);
+        
+SELECT * FROM transactions;
+
