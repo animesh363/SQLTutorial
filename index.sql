@@ -432,3 +432,54 @@ VALUES	(5.99),
         
 SELECT * FROM transactions;
 
+-- Foreign key --
+CREATE TABLE customers(
+	customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50)
+);
+
+SELECT * FROM customers;
+
+INSERT INTO customers(first_name, last_name)
+VALUES  ("Rockey","Thakur"),
+		("Sunu","Sharma"),
+        ("Pranav","Piyush");
+        
+INSERT INTO customers(first_name, last_name)
+VALUES  ("Harshit","Sharma");
+        
+        
+DROP TABLE transactions;
+
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    amount DECIMAL(5,2),
+    customer_id INT,
+    FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+-- dropping foreignkey
+ALTER TABLE transactions
+DROP FOREIGN KEY transactions_ibfk_1;
+-- adding new name to that foreign_key
+ALTER TABLE transactions
+ADD CONSTRAINT fk_customer_id
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+
+DELETE FROM transactions;
+SELECT * FROM transactions;
+
+ALTER TABLE transactions
+AUTO_INCREMENT =100;
+
+INSERT INTO transactions(amount, customer_id)
+VALUES	(4.99, 3),
+		(3.99, 2),
+        (3.38, 3),
+        (4.99, 1);
+
+INSERT INTO transactions(amount,customer_id)
+VALUES (1.00, NULL);
+
+SELECT * FROM transactions;
