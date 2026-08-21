@@ -619,3 +619,11 @@ FROM employees
 WHERE NOT job='Developer';
 
 -- TILL LOGICAL OPRATOR
+
+SELECT *
+FROM employees
+WHERE hire_date BETWEEN "2026-01-07" AND "2026-09-11";
+
+SELECT *
+FROM employees
+WHERE JOB IN("Developer","Manager");
