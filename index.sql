@@ -483,3 +483,139 @@ INSERT INTO transactions(amount,customer_id)
 VALUES (1.00, NULL);
 
 SELECT * FROM transactions;
+
+
+-- Foreign key --
+CREATE TABLE customers(
+	customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50)
+);
+
+SELECT * FROM customers;
+
+INSERT INTO customers(first_name, last_name)
+VALUES  ("Rockey","Thakur"),
+		("Sunu","Sharma"),
+        ("Pranav","Piyush");
+        
+INSERT INTO customers(first_name, last_name)
+VALUES  ("Harshit","Sharma");
+        
+        
+DROP TABLE transactions;
+
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    amount DECIMAL(5,2),
+    customer_id INT,
+    FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+-- dropping foreignkey
+ALTER TABLE transactions
+DROP FOREIGN KEY transactions_ibfk_1;
+-- adding new name to that foreign_key
+ALTER TABLE transactions
+ADD CONSTRAINT fk_customer_id
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+
+DELETE FROM transactions;
+SELECT * FROM transactions;
+
+ALTER TABLE transactions
+AUTO_INCREMENT =100;
+
+INSERT INTO transactions(amount, customer_id)
+VALUES	(4.99, 3),
+		(3.99, 2),
+        (3.38, 3),
+        (4.99, 1);
+
+INSERT INTO transactions(amount,customer_id)
+VALUES (1.00, NULL);
+
+SELECT * FROM transactions;
+
+-- inner join 
+SELECT *
+FROM transactions INNER JOIN customers
+ON transactions.customer_id = customers.customer_id;
+
+SELECT transaction_id, amount,customers.customer_id, first_name, last_name
+FROM transactions INNER JOIN customers
+ON transactions.customer_id = customers.customer_id;
+
+-- left join
+
+
+-- Right join 
+SELECT *
+FROM transactions RIGHT JOIN customers
+ON transactions.customer_id = customers.customer_id; 
+
+SELECT * FROM transactions;
+
+SELECT COUNT(amount)
+FROM transactions;
+
+-- we can give a column header
+SELECT COUNT(amount) As "total no of transactions"
+FROM transactions;
+
+SELECT MAX(amount) AS "maximum amount"
+FROM transactions;
+
+SELECT MIN(amount) AS "minimum amount"
+FROM transactions;
+
+SELECT AVG(amount) AS "Average amount"
+FROM transactions;
+
+SELECT SUM(amount) AS Sum
+FROM transactions;
+
+SELECT * FROM employees;
+SELECT CONCAT(first_name, " ", last_name) AS full_name
+FROM employees; 
+
+-- Logical AND OR NOT oprators
+
+SELECT * FROM employees;
+
+ALTER TABLE employees 
+ADD column job VARCHAR(25) AFTER hourly_pay;
+
+UPDATE employees
+SET JOB = 
+	CASE
+		WHEN employee_id=1 THEN 'Developer'  -- i have inserted wrong before
+        WHEN employee_id=2 THEN 'Manager'
+        WHEN employee_id=3 THEN 'Designer'
+        WHEN employee_id=4 THEN 'Tester'
+        WHEN employee_id=5 THEN 'HR'
+        WHEN employee_id=6 THEN 'Developer'
+	END;
+    
+UPDATE employees
+SET job='Developer'
+WHERE employee_id=1;
+    
+    
+SELECT *
+FROM employees
+WHERE hire_date <= "2026-03-11"  AND job='Developer';
+
+SELECT *
+FROM employees
+WHERE job='Developer';
+
+SELECT *
+FROM employees
+WHERE job='Developer' OR job='HR';
+
+SELECT *
+FROM employees
+WHERE NOT job='Developer';
+
+-- TILL LOGICAL OPRATOR
