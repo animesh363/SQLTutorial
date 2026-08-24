@@ -627,3 +627,24 @@ WHERE hire_date BETWEEN "2026-01-07" AND "2026-09-11";
 SELECT *
 FROM employees
 WHERE JOB IN("Developer","Manager");
+
+-- ORDER BY --
+-- ORDER BY is used to sort the result of a query.
+
+SELECT * FROM employees
+ORDER BY last_name; -- by default it arrange in ascendinng order
+
+SELECT * FROM employees
+ORDER BY first_name ASC; -- ASC not needed
+
+SELECT * FROM employees
+ORDER BY hourly_pay DESC;
+
+SELECT * FROM transactions
+ORDER BY amount;
+
+SELECT * FROM transactions
+ORDER BY amount DESC;
+
+SELECT * FROM transactions
+ORDER BY amount DESC, customer_id; -- if amount is same for 2 then it will order on the basis of customer_id
