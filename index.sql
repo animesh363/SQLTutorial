@@ -648,3 +648,65 @@ ORDER BY amount DESC;
 
 SELECT * FROM transactions
 ORDER BY amount DESC, customer_id; -- if amount is same for 2 then it will order on the basis of customer_id
+
+-- LIMIT --
+-- LIMIT is used to control how many rows are returned by a query.
+-- REAL INDUSTRY USES:
+-- Pagination
+-- Top products
+-- Latest orders
+-- Leaderboards
+-- Latest posts
+
+SELECT * FROM customers; 
+
+SELECT * FROM customers
+LIMIT 1;
+
+SELECT * FROM customers
+ORDER BY first_name DESC LIMIT 3;
+
+-- with OFFSET
+SELECT * FROM customers
+LIMIT 1, 2;  -- OFFSET 1 LIMIT 2 skip 1 rows and return next 2 rows
+
+-- OFFSET->  is used to skip a specific number of rows before returning the result.
+SELECT * FROM customers
+LIMIT 2 OFFSET 2;
+
+
+-- UNION combines the results of two or more SELECT statement
+-- ->Removes Duplicate,-> should be same no of coluls
+CREATE TABLE income(
+	income_name VARCHAR(50),
+    amount INT
+);
+
+INSERT INTO income
+VALUES	("orders",10000),
+		("kart",12000),
+        ("service",15000);
+SELECT * FROM income;
+
+CREATE TABLE expences(
+	expance_name VARCHAR(50),
+    amount INT
+);
+INSERT INTO expences
+VALUES	("wages",-10000),
+		("tax",-8000),
+        ("repairs",-4000);
+SELECT * FROM income;
+-- UNION
+SELECT * FROM income
+UNION
+SELECT * FROM expences;
+
+SELECT first_name, last_name FROM employees
+UNION
+select first_name, last_name FROM customers;
+
+-- UNION ALL -> keeps duplicates.
+SELECT first_name, last_name FROM employees
+UNION ALL
+select first_name, last_name FROM customers;
