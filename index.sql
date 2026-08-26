@@ -710,3 +710,38 @@ select first_name, last_name FROM customers;
 SELECT first_name, last_name FROM employees
 UNION ALL
 select first_name, last_name FROM customers;
+
+
+-- SELF JOIN -> A SELF JOIN means joining a table with itself.
+ALTER TABLE customers
+ADD referral_id INT;
+SELECT * FROM customers;
+
+UPDATE customers
+SET referral_id=2
+WHERE customer_id=4;
+SELECT * FROM customers;
+
+SELECT a.customer_id, a.first_name, a.last_name,
+		CONCAT(b.first_name ," ", b.last_name) AS "reffered_by"
+FROM customers AS a
+INNER JOIN customers AS b
+ON a.referral_id = b.customer_id;
+
+INSERT INTO employees
+VALUES (6,"Riya","Rai",100.00,"astmanager","2026-01-07",2);
+
+ALTER TABLE employees
+ADD supervisor_id INT;
+
+UPDATE employees
+SET supervisor_id=2
+WHERE employee_id=6;
+SELECT * FROM employees; -- all is reporting at astmanager and she is reporting to manager
+
+
+SELECT a.first_name, a.last_name,
+		CONCAT(b.first_name," ",b.last_name) AS "Reports_to"
+FROM employees AS a
+INNER JOIN employees AS b
+ON a.supervisor_id = b.employee_id;
